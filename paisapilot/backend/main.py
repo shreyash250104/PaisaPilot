@@ -1,3 +1,5 @@
+from accounts import router as accounts_router
+from transactions import router as transactions_router
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy import text
 from sqlalchemy.orm import Session
@@ -7,6 +9,9 @@ from schemas import UserCreate, UserLogin, UserOut, TokenOut
 from auth import hash_password, verify_password, create_token, get_current_user
 
 app = FastAPI(title="PaisaPilot")
+
+app.include_router(accounts_router)
+app.include_router(transactions_router)
 
 @app.get("/health")
 def health():
