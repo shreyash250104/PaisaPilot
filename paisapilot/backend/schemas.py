@@ -62,3 +62,26 @@ class TransactionOut(BaseModel):
     description: Optional[str]
     txn_date: date
     model_config = {"from_attributes": True}
+
+class BudgetSet(BaseModel):
+    category_id: int
+    month_year: str = Field(pattern=r"^\d{4}-(0[1-9]|1[0-2])$")
+    limit_amount: float = Field(gt=0)
+
+class BudgetProgress(BaseModel):
+    id: int
+    category_id: int
+    category: str
+    month_year: str
+    limit_amount: float
+    spent: float
+    percent: float
+    status: str
+
+class AlertOut(BaseModel):
+    id: int
+    budget_id: int
+    category: str
+    month_year: str
+    level: int
+    is_read: bool

@@ -1,6 +1,7 @@
 from accounts import router as accounts_router
 from transactions import router as transactions_router
 from importer import router as importer_router
+from budgets import router as budgets_router
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy import text
 from sqlalchemy.orm import Session
@@ -14,6 +15,8 @@ app = FastAPI(title="PaisaPilot")
 app.include_router(accounts_router)
 app.include_router(transactions_router)
 app.include_router(importer_router)
+app.include_router(budgets_router)
+
 @app.get("/health")
 def health():
     return {"status": "OK"}
