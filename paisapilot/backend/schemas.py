@@ -85,3 +85,82 @@ class AlertOut(BaseModel):
     month_year: str
     level: int
     is_read: bool
+    
+    
+class GroupCreate(BaseModel):
+    name: str = Field(min_length=1, max_length=100)
+
+class GroupOut(BaseModel):
+    id: int
+    name: str
+    created_by: int
+    model_config = {"from_attributes": True}
+
+class MemberAdd(BaseModel):
+    email: EmailStr
+
+class MemberOut(BaseModel):
+    user_id: int
+    name: str
+    email: EmailStr
+
+class GroupDetail(BaseModel):
+    id: int
+    name: str
+    created_by: int
+    members: list[MemberOut]
+
+class SplitItem(BaseModel):
+    user_id: int
+    share: float = Field(gt=0)
+
+class SharedExpenseCreate(BaseModel):
+    description: str
+    amount: float = Field(gt=0)
+    paid_by: int
+    split_type: Literal["equal", "custom"] = "equal"
+    split_among: Optional[list[int]] = None
+    splits: Optional[list[SplitItem]] = None
+    expense_date: date
+
+class ExpenseOut(BaseModel):
+    id: int
+    group_id: int
+    paid_by: int
+    amount: float
+    description: Optional[str]
+    split_type: str
+    expense_date: date
+    model_config = {"from_attributes": True}
+
+class BalanceItem(BaseModel):
+    user_id: int
+    name: str
+    net: float
+
+class PaymentItem(BaseModel):
+    from_user: int
+    from_name: str
+    to_user: int
+    to_name: str
+    amount: float
+
+class BalancesOut(BaseModel):
+    group_id: int
+    balances: list[BalanceItem]
+    payments: list[PaymentItem]
+
+class SettleCreate(BaseModel):
+    from_user: int
+    to_user: int
+    amount: float = Field(gt=0)
+    settled_on: date
+
+class SettlementOut(BaseModel):
+    id: int
+    group_id: int
+    from_user: int
+    to_user: int
+    amount: float
+    settled_on: date
+    model_config = {"from_attributes": True}

@@ -51,3 +51,44 @@ class BudgetAlert(Base):
     level = Column(Integer, nullable=False)
     is_read = Column(Boolean, default=False)
     created_at = Column(DateTime, server_default=func.now())
+    
+    
+class ExpenseGroup(Base):
+    __tablename__ = "expense_groups"
+    id = Column(Integer, primary_key=True)
+    name = Column(String(100), nullable=False)
+    created_by = Column(Integer, ForeignKey("users.id"), nullable=False)
+    created_at = Column(DateTime, server_default=func.now())
+
+class GroupMember(Base):
+    __tablename__ = "group_members"
+    group_id = Column(Integer, ForeignKey("expense_groups.id"), primary_key=True)
+    user_id = Column(Integer, ForeignKey("users.id"), primary_key=True)
+    joined_at = Column(DateTime, server_default=func.now())
+
+class SharedExpense(Base):
+    __tablename__ = "shared_expenses"
+    id = Column(Integer, primary_key=True)
+    group_id = Column(Integer, ForeignKey("expense_groups.id"), nullable=False)
+    paid_by = Column(Integer, ForeignKey("users.id"), nullable=False)
+    amount = Column(Numeric(12, 2), nullable=False)
+    description = Column(String(255))
+    split_type = Column(String(10), nullable=False)
+    expense_date = Column(Date, nullable=False)
+    created_at = Column(DateTime, server_default=func.now())
+
+class ExpenseSplit(Base):
+    __tablename__ = "expense_splits"
+    id = Column(Integer, primary_key=True)
+    expense_id = Column(Integer, ForeignKey("shared_expenses.id"), nullable=False)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    share_amount = Column(Numeric(12, 2), nullable=False)
+
+class Settlement(Base):
+    __tablename__ = "settlements"
+    id = Column(Integer, primary_key=True)
+    group_id = Column(Integer, ForeignKey("expense_groups.id"), nullable=False)
+    from_user = Column(Integer, ForeignKey("users.id"), nullable=False)
+    to_user = Column(Integer, ForeignKey("users.id"), nullable=False)
+    amount = Column(Numeric(12, 2), nullable=False)
+    settled_on = Column(Date, nullable=False)
