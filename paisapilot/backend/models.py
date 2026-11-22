@@ -9,6 +9,7 @@ class User(Base):
     email = Column(String(150), unique=True, nullable=False)
     password_hash = Column(String(255), nullable=False)
     created_at = Column(DateTime, server_default=func.now())
+    is_admin = Column(Boolean, default=False)
 
 class Account(Base):
     __tablename__ = "accounts"
@@ -92,3 +93,31 @@ class Settlement(Base):
     to_user = Column(Integer, ForeignKey("users.id"), nullable=False)
     amount = Column(Numeric(12, 2), nullable=False)
     settled_on = Column(Date, nullable=False)
+    
+class SavingsGoal(Base):
+    __tablename__ = "savings_goals"
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    title = Column(String(100), nullable=False)
+    target_amount = Column(Numeric(12, 2), nullable=False)
+    saved_amount = Column(Numeric(12, 2), default=0)
+    target_date = Column(Date)
+
+class RecurringBill(Base):
+    __tablename__ = "recurring_bills"
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    category_id = Column(Integer, ForeignKey("categories.id"))
+    title = Column(String(100), nullable=False)
+    amount = Column(Numeric(12, 2), nullable=False)
+    due_day = Column(Integer, nullable=False)
+    is_active = Column(Boolean, default=True)
+
+class AuditLog(Base):
+    __tablename__ = "audit_log"
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    action = Column(String(50), nullable=False)
+    table_name = Column(String(50), nullable=False)
+    record_id = Column(Integer)
+    created_at = Column(DateTime, server_default=func.now())

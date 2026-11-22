@@ -4,6 +4,8 @@ from importer import router as importer_router
 from budgets import router as budgets_router
 from groups import router as groups_router
 from analytics import router as analytics_router
+from goals import router as goals_router
+from admin import router as admin_router
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy import text
 from sqlalchemy.orm import Session
@@ -20,6 +22,8 @@ app.include_router(importer_router)
 app.include_router(budgets_router)
 app.include_router(groups_router)
 app.include_router(analytics_router)
+app.include_router(goals_router)
+app.include_router(admin_router)
 
 @app.get("/health")
 def health():

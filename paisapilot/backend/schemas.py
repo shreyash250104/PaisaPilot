@@ -164,3 +164,37 @@ class SettlementOut(BaseModel):
     amount: float
     settled_on: date
     model_config = {"from_attributes": True}
+    
+    
+class GoalCreate(BaseModel):
+    title: str = Field(min_length=1, max_length=100)
+    target_amount: float = Field(gt=0)
+    target_date: Optional[date] = None
+
+class ContributeIn(BaseModel):
+    amount: float = Field(gt=0)
+
+class GoalOut(BaseModel):
+    id: int
+    title: str
+    target_amount: float
+    saved_amount: float
+    percent: float
+    status: str
+    target_date: Optional[date]
+
+class BillCreate(BaseModel):
+    title: str = Field(min_length=1, max_length=100)
+    amount: float = Field(gt=0)
+    due_day: int = Field(ge=1, le=31)
+    category_id: Optional[int] = None
+
+class BillOut(BaseModel):
+    id: int
+    title: str
+    amount: float
+    due_day: int
+    category_id: Optional[int]
+    is_active: bool
+    next_due: date
+    days_left: int
