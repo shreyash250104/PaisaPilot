@@ -50,3 +50,11 @@ td.expense { color: #c0504d; } td.income { color: #2e7d32; }
 .tag { padding: 2px 8px; border-radius: 10px; font-size: .8rem; }
 .tag.new { background: #d1e7dd; } .tag.duplicate { background: #fff3cd; } .tag.error { background: #f8d7da; }
 .top { flex-wrap: wrap; gap: 8px; }
+
+.layout2 { display: grid; grid-template-columns: 220px 1fr; gap: 14px; align-items: start; }
+.glist button { display: block; width: 100%; text-align: left; margin-bottom: 6px; }
+.glist button.active { background: #4a7fb5; color: #fff; border-color: #4a7fb5; }
+td.pos { color: #2e7d32; } td.neg { color: #c0504d; }
+.suggest { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #eee; }
+@media (max-width: 700px) { .layout2 { grid-template-columns: 1fr; } }
+@media print { .no-print, .top { display: none !important; } body { background: #fff; } }

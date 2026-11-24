@@ -20,6 +20,8 @@ export default function Layout() {
           <NavLink to="/" end>Dashboard</NavLink>
           <NavLink to="/transactions">Transactions</NavLink>
           <NavLink to="/budgets">Budgets</NavLink>
+          <NavLink to="/groups">Groups</NavLink>
+          <NavLink to="/reports">Reports</NavLink>
         </nav>
         <div className="right">
           <span className="muted">{user ? user.name : ""}</span>

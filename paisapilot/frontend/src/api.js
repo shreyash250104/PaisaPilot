@@ -55,4 +55,14 @@ export const api = {
     fd.append("file", file);
     return request(`/import/csv?account_id=${accountId}&save=${save}`, { method: "POST", body: fd });
   },
+  groups: () => request("/groups"),
+  createGroup: (name) => request("/groups", json("POST", { name })),
+  groupDetail: (id) => request(`/groups/${id}`),
+  addMember: (id, email) => request(`/groups/${id}/members`, json("POST", { email })),
+  groupExpenses: (id) => request(`/groups/${id}/expenses`),
+  addGroupExpense: (id, e) => request(`/groups/${id}/expenses`, json("POST", e)),
+  balances: (id) => request(`/groups/${id}/balances`),
+  settle: (id, s) => request(`/groups/${id}/settle`, json("POST", s)),
+  topExpenses: (month) => request(`/reports/top-expenses?month=${month}&n=5`),
+  forecast: () => request("/reports/forecast"),
 };

@@ -4,6 +4,8 @@ import Dashboard from "./pages/Dashboard";
 import Transactions from "./pages/Transactions";
 import Budgets from "./pages/Budgets";
 import Layout from "./components/Layout";
+import Groups from "./pages/Groups";
+import Reports from "./pages/Reports";
 import { getToken } from "./api";
 
 const Private = ({ children }) =>
@@ -17,6 +19,8 @@ export default function App() {
         <Route path="/" element={<Dashboard />} />
         <Route path="/transactions" element={<Transactions />} />
         <Route path="/budgets" element={<Budgets />} />
+        <Route path="/groups" element={<Groups />} />
+        <Route path="/reports" element={<Reports />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
