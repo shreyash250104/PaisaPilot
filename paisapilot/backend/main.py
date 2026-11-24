@@ -1,3 +1,4 @@
+from fastapi.middleware.cors import CORSMiddleware
 from accounts import router as accounts_router
 from transactions import router as transactions_router
 from importer import router as importer_router
@@ -15,6 +16,12 @@ from schemas import UserCreate, UserLogin, UserOut, TokenOut
 from auth import hash_password, verify_password, create_token, get_current_user
 
 app = FastAPI(title="PaisaPilot")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(accounts_router)
 app.include_router(transactions_router)

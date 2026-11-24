@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import {
   Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale,
   LinearScale, PointElement, LineElement,
 } from "chart.js";
 import { Doughnut, Line } from "react-chartjs-2";
-import { api, logout } from "../api";
+import { api } from "../api";
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement);
 
@@ -17,9 +16,7 @@ const currentMonth = () => {
 };
 
 export default function Dashboard() {
-  const nav = useNavigate();
   const [month, setMonth] = useState(currentMonth());
-  const [user, setUser] = useState(null);
   const [summary, setSummary] = useState(null);
   const [trend, setTrend] = useState([]);
   const [budgets, setBudgets] = useState([]);
@@ -27,10 +24,6 @@ export default function Dashboard() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    api.me().then(setUser).catch((e) => setError(e.message));
-  }, []);
-
-    useEffect(() => {
     Promise.all([api.summary(month), api.trend(), api.budgets(month), api.alerts()])
       .then(([s, t, b, a]) => {
         setError("");
@@ -41,21 +34,14 @@ export default function Dashboard() {
       })
       .catch((e) => setError(e.message));
   }, [month]);
-  const doLogout = () => { logout(); nav("/login"); };
+
   const cats = summary ? summary.categories : [];
 
   return (
-    <div className="page">
-      <header className="top">
-        <h2>PaisaPilot</h2>
-        <div className="right">
-          <span className="muted">{user ? user.name : ""}</span>
-          <button onClick={doLogout}>Logout</button>
-        </div>
-      </header>
-
+    <>
       <div className="controls">
-        <label>Month: <input type="month" value={month} onChange={(e) => e.target.value && setMonth(e.target.value)} /></label>
+        <label>Month: <input type="month" value={month}
+          onChange={(e) => e.target.value && setMonth(e.target.value)} /></label>
       </div>
 
       {error && <div className="error">{error}</div>}
@@ -108,6 +94,6 @@ export default function Dashboard() {
             </div>
           ))}
       </div>
-    </div>
+    </>
   );
 }

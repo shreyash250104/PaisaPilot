@@ -31,3 +31,22 @@ input { padding: 8px; border: 1px solid #ccc; border-radius: 6px; width: 100%; }
 .auth h1 { margin: 0; color: #4a7fb5; text-align: center; }
 .auth .muted { text-align: center; margin: 0 0 6px; }
 @media (max-width: 700px) { .cards, .grid { grid-template-columns: 1fr; } }
+
+.nav { display: flex; gap: 6px; }
+.nav a { padding: 6px 12px; border-radius: 6px; text-decoration: none; color: #444; }
+.nav a.active { background: #4a7fb5; color: #fff; }
+.success { background: #d1e7dd; color: #0f5132; padding: 8px 12px; border-radius: 6px; margin: 8px 0; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.chip { background: #eaf1f8; padding: 6px 10px; border-radius: 16px; }
+.form-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 8px; }
+.form-row input, .form-row select { width: auto; flex: 1; min-width: 120px; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 8px 0 12px; }
+select { padding: 8px; border: 1px solid #ccc; border-radius: 6px; background: #fff; }
+.scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+th, td { text-align: left; padding: 8px; border-bottom: 1px solid #eee; }
+th { color: #666; }
+td.expense { color: #c0504d; } td.income { color: #2e7d32; }
+.tag { padding: 2px 8px; border-radius: 10px; font-size: .8rem; }
+.tag.new { background: #d1e7dd; } .tag.duplicate { background: #fff3cd; } .tag.error { background: #f8d7da; }
+.top { flex-wrap: wrap; gap: 8px; }
